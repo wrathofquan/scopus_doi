@@ -22,10 +22,12 @@ auth_IDs <- c(7403929333,6602245152,6602659025,25655162000,8047132400,7101992203
 ## loop over authorIDs
 df = NULL
 for (id in auth_IDs){
-  x <- author_df(au_id = id, all_author_info = FALSE)
-  df = rbind(df, data.frame(x))
+  x <- author_df(au_id = id, all_author_info = TRUE)
+  df = bind_rows(df, data.frame(x))
   
 }
+
+write_csv(df, "scopus_DOI_complete.csv")
 
 
 ## 
