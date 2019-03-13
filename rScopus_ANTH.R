@@ -25,8 +25,13 @@ write_csv(df, "scopus_DOI_complete.csv")
 ## subset dois from df
 doi <- na.omit(df$prism.doi)
 
-#abstract retrieval API search to get the deep lists of bib. info
-abs <- abstract_retrieval(doi[2], identifier="doi")
+#abstract retrieval API search to get the deep lists of bib. info. 
+# this takes an argument by index
+x <- abstract_retrieval(doi[2], identifier="doi")
+
+## you can also do it by specifying doi
+x <- abstract_retrieval("10.1017/S0010417503000239", identifier="doi")
+
 
 ## dataframe of references
 references_for_oneArticle <- as.data.frame(x$content$`abstracts-retrieval-response`$item$
@@ -34,3 +39,5 @@ references_for_oneArticle <- as.data.frame(x$content$`abstracts-retrieval-respon
   select(starts_with("ref.fulltext"))%>%  
   gather(id, reference, starts_with("ref.fulltext"))
 
+
+write_csv(references_for_oneArticle, "references_for_oneArticle.csv")
